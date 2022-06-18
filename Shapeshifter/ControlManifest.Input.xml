@@ -19,7 +19,10 @@
     </external-service-usage>
     <!-- property node identifies a specific, configurable piece of data that the control expects from CDS -->
     <property name="Label" display-name-key="Label" description-key="Label" of-type="SingleLine.Text" usage="bound" required="true" />
-    <property name="ControlType" display-name-key="ControlType" description-key="Label" of-type="SingleLine.Text" usage="bound" required="true" />
+    <property name="ControlType" display-name-key="ControlType" description-key="ControlType" of-type="Enum" usage="bound" required="true">
+      <value name="TextField" display-name-key="Text Field" description-key="A standard Fluent UI Text Field" default="true">TextField</value>
+      <value name="Date" display-name-key="Date" description-key="A standard date picker">Date</value>
+    </property>
     <property name="Default" display-name-key="Default" description-key="Default" of-type="SingleLine.Text" usage="bound" required="true" />
 
     <resources>

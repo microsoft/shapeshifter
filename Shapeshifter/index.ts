@@ -7,11 +7,15 @@ export class Shapeshifter
 {
   private theComponent: ComponentFramework.ReactControl<IInputs, IOutputs>;
   private notifyOutputChanged: () => void;
+  private currentValue: string | null | undefined;
+  private defaultValue : string | null;
 
   /**
    * Empty constructor.
    */
-  constructor() {}
+  constructor() {
+
+  }
 
   /**
    * Used to initialize the control instance. Controls can kick off remote server calls and other initialization actions here.
@@ -25,17 +29,20 @@ export class Shapeshifter
     notifyOutputChanged: () => void,
     state: ComponentFramework.Dictionary
   ): void {
+    console.log("using virtual control in ShapeShifter");
+    this.defaultValue = context.parameters.Default.raw;
     this.notifyOutputChanged = notifyOutputChanged;
   }
 
-  /**
-   * Called when any value in the property bag has changed. This includes field values, data-sets, global values such as container height and width, offline status, control metadata values such as label, visible, etc.
-   * @param context The entire property bag available to control via Context Object; It contains values as set up by the customizer mapped to names defined in the manifest, as well as utility functions
-   * @returns ReactElement root react element for the control
-   */
-  public updateView(
-    context: ComponentFramework.Context<IInputs>
-  ): React.ReactElement {
+  private onChange = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,newValue?: string | null) => {
+    this.currentValue = newValue;
+    this.notifyOutputChanged();
+};
+
+private renderControl(context: ComponentFramework.Context<IInputs>) : React.ReactElement {
+    console.log("entered renderControl in index.ts", context.updatedProperties);
+
+    this.currentValue = context.parameters.Default.raw;	
     const _lbl =
       context.parameters.Label.raw == null ? "" : context.parameters.Label.raw;
 
@@ -45,10 +52,23 @@ export class Shapeshifter
 
     const props: IShapeShifterProps = {
       label: _lbl,
-      controlType: context.parameters.ControlType.raw,
+      controlType: context.parameters.ControlType,
       default: _default,
+      onChange: this.onChange
     };
-    return React.createElement(ShapeShifter, props);
+    return React.createElement(ShapeShifter, props );
+}
+
+  /**
+   * Called when any value in the property bag has changed. This includes field values, data-sets, global values such as container height and width, offline status, control metadata values such as label, visible, etc.
+   * @param context The entire property bag available to control via Context Object; It contains values as set up by the customizer mapped to names defined in the manifest, as well as utility functions
+   * @returns ReactElement root react element for the control
+   */
+  public updateView(
+    context: ComponentFramework.Context<IInputs>
+  ): React.ReactElement {
+    
+    return this.renderControl(context);
   }
 
   /**
@@ -56,7 +76,9 @@ export class Shapeshifter
    * @returns an object based on nomenclature defined in manifest, expecting object[s] for property marked as “bound” or “output”
    */
   public getOutputs(): IOutputs {
-    return {};
+    return {
+        Default: this.currentValue == null ? undefined : this.currentValue
+    };
   }
 
   /**
