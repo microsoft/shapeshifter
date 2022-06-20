@@ -1,0 +1,16 @@
+{
+	"name": "PCF devcontainer",
+	"dockerFile": "Dockerfile",
+	// Set *default* container specific settings.json values on container create.
+	"settings": {
+		"terminal.integrated.defaultProfile.linux": "pwsh"
+	},
+	"extensions": [
+		"danish-naglekar.pcf-builder"
+	],
+	"forwardPorts": [8181],
+	"containerEnv": {
+		"CHOKIDAR_USEPOLLING": "1"
+	},
+	"postCreateCommand": "pwsh -c 'if(-not (Test-Path /workspaces/tools)) { git clone --depth=1 https://github.com/microsoft/powerplatform-actions.git actions; Move-Item -Path ./actions/dist/pac_linux/tools -Destination /workspaces -Force; Remove-Item actions -Force -Recurse; }'"
+}
