@@ -12,3 +12,6 @@
 # msbuild output directories
 /bin
 /obj
+
+# ignore macos file
+.DS_Store
