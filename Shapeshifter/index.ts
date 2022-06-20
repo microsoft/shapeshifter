@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
 import { ShapeShifter, IShapeShifterProps } from "./ShapeShifter";
 import * as React from "react";
@@ -9,6 +10,7 @@ export class Shapeshifter
   private notifyOutputChanged: () => void;
   private currentValue: string | null | undefined;
   private defaultValue : string | null;
+  private _state: ComponentFramework.Dictionary;
 
   /**
    * Empty constructor.
@@ -29,12 +31,17 @@ export class Shapeshifter
     notifyOutputChanged: () => void,
     state: ComponentFramework.Dictionary
   ): void {
+    this._state = state;
     console.log("using virtual control in ShapeShifter");
     this.defaultValue = context.parameters.Default.raw;
     this.notifyOutputChanged = notifyOutputChanged;
   }
 
-  private onChange = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,newValue?: string | null) => {
+  private onSelectedDate = (date: Date) => {
+    this.onChange({},date.toDateString());
+  }
+
+  private onChange = (e?: any, newValue?: string | null) => {
     this.currentValue = newValue;
     this.notifyOutputChanged();
 };
@@ -54,7 +61,8 @@ private renderControl(context: ComponentFramework.Context<IInputs>) : React.Reac
       label: _lbl,
       controlType: context.parameters.ControlType,
       default: _default,
-      onChange: this.onChange
+      onChange: this.onChange,
+      onSelectedDate: this.onSelectedDate
     };
     return React.createElement(ShapeShifter, props );
 }
