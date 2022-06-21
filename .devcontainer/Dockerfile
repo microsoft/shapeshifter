@@ -7,5 +7,5 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 
 ENV PATH="$PATH:/root/.dotnet/tools:/workspaces/tools"
 
-RUN dotnet tool install -g powershell \
-    && git lfs install
+# RUN dotnet tool install -g powershell \
+#     && git lfs install
