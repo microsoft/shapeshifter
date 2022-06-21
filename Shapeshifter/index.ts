@@ -85,7 +85,7 @@ private renderControl(context: ComponentFramework.Context<IInputs>) : React.Reac
    */
   public getOutputs(): IOutputs {
     return {
-        Default: this.currentValue == null ? undefined : this.currentValue
+        Value: this.currentValue == null ? undefined : this.currentValue
     };
   }
 
