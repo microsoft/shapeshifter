@@ -22,6 +22,7 @@
     <property name="ControlType" display-name-key="ControlType" description-key="ControlType" of-type="Enum" usage="bound" required="true">
       <value name="TextField" display-name-key="Text Field" description-key="A standard Fluent UI Text Field" default="true">TextField</value>
       <value name="Date" display-name-key="Date" description-key="A standard date picker">Date</value>
+      <value name="Slider" display-name-key="Slider" description-key="A standard date picker">Slider</value>
     </property>
     <property name="Default" display-name-key="Default" description-key="Default" of-type="SingleLine.Text" usage="bound" required="true" />
     <property name="Value" display-name-key="Value" description-key="Value" of-type="SingleLine.Text" usage="output" required="true" />

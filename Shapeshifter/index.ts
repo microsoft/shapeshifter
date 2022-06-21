@@ -37,6 +37,10 @@ export class Shapeshifter
     this.notifyOutputChanged = notifyOutputChanged;
   }
 
+  private onSliderChange = (newValue: number) => {
+    this.onChange({},newValue.toString())
+  }
+
   private onSelectedDate = (date: Date) => {
     this.onChange({},date.toDateString());
   }
@@ -56,13 +60,16 @@ private renderControl(context: ComponentFramework.Context<IInputs>) : React.Reac
     const _default =
       context.parameters.Default.raw == null ? "" : context.parameters.Default.raw;
 
+    const _defaultNo = Number(_default);
 
     const props: IShapeShifterProps = {
       label: _lbl,
       controlType: context.parameters.ControlType,
       default: _default,
+      defaultNumber: _defaultNo,
       onChange: this.onChange,
-      onSelectedDate: this.onSelectedDate
+      onSelectedDate: this.onSelectedDate,
+      onSliderChange: this.onSliderChange
     };
     return React.createElement(ShapeShifter, props );
 }
