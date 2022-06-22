@@ -29,7 +29,7 @@ export class ShapeShifter extends React.Component<IShapeShifterProps> {
         el = <Slider
           label={this.props.label}
           max={10}
-          value={this.props.defaultNumber}
+          defaultValue={this.props.defaultNumber}
           showValue
           // eslint-disable-next-line react/jsx-no-bind
           onChange={this.props.onSliderChange}
