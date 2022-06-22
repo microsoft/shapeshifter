@@ -9,6 +9,7 @@ The inspiration for this control is that there is no way to do it in a Canvas Ap
 ## Implemented Controls
 * Fluent UI TextField
 * Fluent UI DatePicker
+* Fluent UI Slider
 
 ## How to use
 Import the solution from our releases area.  It has a sample Canvas App to help you understand the concept.
