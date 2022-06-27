@@ -1,15 +1,16 @@
 /* eslint-disable no-undef */
 import * as React from 'react';
-import { TextField, DatePicker, Async, Slider } from '@fluentui/react';
+import { TextField, DatePicker, Async, Slider, Dropdown, IDropdownOption } from '@fluentui/react';
 
 export interface IShapeShifterProps {
   label?: string;
   onChange: () => void;
-  controlType: ComponentFramework.PropertyTypes.EnumProperty<"TextField" | "Date" | "Slider">;
+  controlType: ComponentFramework.PropertyTypes.EnumProperty<"TextField" | "Date" | "Slider" | "Dropdown">;
   default?: string | undefined;
   defaultNumber?: number | undefined;
   onSelectedDate?: (date: any) => void;
-  onSliderChange?: (newValue:any) => void;
+  onSliderChange?: (newValue: any) => void;
+  dropdownOptions: IDropdownOption[];
 }
 
 export class ShapeShifter extends React.Component<IShapeShifterProps> {
@@ -34,6 +35,12 @@ export class ShapeShifter extends React.Component<IShapeShifterProps> {
           // eslint-disable-next-line react/jsx-no-bind
           onChange={this.props.onSliderChange}
         />
+        break;
+      case "Dropdown":
+        el = <Dropdown
+          label={this.props.label}
+          defaultSelectedKey={this.props.default}
+          options={this.props.dropdownOptions} />
         break;
       default:
         break;

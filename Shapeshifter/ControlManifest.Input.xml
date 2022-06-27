@@ -21,9 +21,11 @@
     <property name="Label" display-name-key="Label" description-key="Label" of-type="SingleLine.Text" usage="bound" required="true" />
     <property name="ControlType" display-name-key="ControlType" description-key="ControlType" of-type="Enum" usage="bound" required="true">
       <value name="TextField" display-name-key="Text Field" description-key="A standard Fluent UI Text Field" default="true">TextField</value>
-      <value name="Date" display-name-key="Date" description-key="A standard date picker">Date</value>
-      <value name="Slider" display-name-key="Slider" description-key="A standard date picker">Slider</value>
+      <value name="Date" display-name-key="Date" description-key="A standard Fluent UI Date Picker">Date</value>
+      <value name="Slider" display-name-key="Slider" description-key="A standard Fluent UI Slider">Slider</value>
+      <value name="Dropdown" display-name-key="Dropdown" description-key="A standard Fluent UI Dropdown">Dropdown</value>
     </property>
+    <property name="Options" display-name-key="Options" description-key="Options" of-type="SingleLine.TextArea" usage="bound" required="false" />
     <property name="Default" display-name-key="Default" description-key="Default" of-type="SingleLine.Text" usage="bound" required="true" />
     <property name="Value" display-name-key="Value" description-key="Value" of-type="SingleLine.Text" usage="output" required="true" />
     <resources>

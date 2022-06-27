@@ -2,6 +2,7 @@
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
 import { ShapeShifter, IShapeShifterProps } from "./ShapeShifter";
 import * as React from "react";
+import { DropdownMenuItemType, IDropdownOption } from "@fluentui/react";
 
 export class Shapeshifter
   implements ComponentFramework.ReactControl<IInputs, IOutputs>
@@ -62,6 +63,19 @@ private renderControl(context: ComponentFramework.Context<IInputs>) : React.Reac
 
     const _defaultNo = Number(_default);
 
+    const _options = [
+      { key: 'fruitsHeader', text: 'Fruits', itemType: DropdownMenuItemType.Header },
+      { key: 'apple', text: 'Apple' },
+      { key: 'banana', text: 'Banana' },
+      { key: 'orange', text: 'Orange', disabled: true },
+      { key: 'grape', text: 'Grape' },
+      { key: 'divider_1', text: '-', itemType: DropdownMenuItemType.Divider },
+      { key: 'vegetablesHeader', text: 'Vegetables', itemType: DropdownMenuItemType.Header },
+      { key: 'broccoli', text: 'Broccoli' },
+      { key: 'carrot', text: 'Carrot' },
+      { key: 'lettuce', text: 'Lettuce' }
+    ];
+
     const props: IShapeShifterProps = {
       label: _lbl,
       controlType: context.parameters.ControlType,
@@ -69,7 +83,8 @@ private renderControl(context: ComponentFramework.Context<IInputs>) : React.Reac
       defaultNumber: _defaultNo,
       onChange: this.onChange,
       onSelectedDate: this.onSelectedDate,
-      onSliderChange: this.onSliderChange
+      onSliderChange: this.onSliderChange,
+      dropdownOptions: _options
     };
     return React.createElement(ShapeShifter, props );
 }
