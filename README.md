@@ -2,9 +2,9 @@
 
 A way to dynamically render controls in Power Apps
 
-![](SampleApp.png)
+![](ShapeshifterDemo.gif)
 
-The inspiration for this control is that there is no way to do it in a Canvas App without toggling the show/hide of all controls which is ugly and hard to manage. It could be used to shrink the amount of static coding in a MDA approach too.
+The inspiration for this control is that there is no way to do it in a Canvas App without toggling the show/hide of all controls which is ugly and hard to manage. It could be used to shrink the amount of static coding in a MDA approach too. I have the ambition to bring this to the world of SharePoint and Teams development also.
 
 ## Implemented Controls
 * Fluent UI TextField
