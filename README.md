@@ -12,7 +12,7 @@ The inspiration for this control is that there is no way to do it in a Canvas Ap
 * Fluent UI Slider
 
 ## How to use
-Import the solution from our releases area.  It has a sample Canvas App to help you understand the concept.
+Import the solution from our [releases area](https://github.com/brendon-colburn/shapeshifter/releases).  It has a sample Canvas App to help you understand the concept.
 To work on the solution clone or fork this repo and build it out in VSCode. Upon importing this solution, you can either copy the included Cavas App as a template or you can import the Shapeshifter control into a new Canvas App.
 
 ## Want to contribute?
