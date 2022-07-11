@@ -10,15 +10,13 @@ export class Shapeshifter
   private theComponent: ComponentFramework.ReactControl<IInputs, IOutputs>;
   private notifyOutputChanged: () => void;
   private currentValue: string | null | undefined;
-  private defaultValue : string | null;
+  private defaultValue: string | null;
   private _state: ComponentFramework.Dictionary;
 
   /**
    * Empty constructor.
    */
-  constructor() {
-
-  }
+  constructor() {}
 
   /**
    * Used to initialize the control instance. Controls can kick off remote server calls and other initialization actions here.
@@ -39,31 +37,49 @@ export class Shapeshifter
   }
 
   private onSliderChange = (newValue: number) => {
-    this.onChange({},newValue.toString())
-  }
+    this.onChange({}, newValue.toString());
+  };
 
   private onSelectedDate = (date: Date) => {
-    this.onChange({},date.toDateString());
-  }
+    this.onChange({}, date.toDateString());
+  };
 
   private onChange = (e?: any, newValue?: string | null) => {
     this.currentValue = newValue;
     this.notifyOutputChanged();
-};
+  };
 
-private renderControl(context: ComponentFramework.Context<IInputs>) : React.ReactElement {
+  private tryParseJSONObject(jsonstring: string | null): boolean {
+    if (jsonstring == null) return false;
+    try {
+      JSON.parse(jsonstring);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  private renderControl(
+    context: ComponentFramework.Context<IInputs>
+  ): React.ReactElement {
     console.log("entered renderControl in index.ts", context.updatedProperties);
 
-    this.currentValue = context.parameters.Default.raw;	
+    this.currentValue = context.parameters.Default.raw;
     const _lbl =
       context.parameters.Label.raw == null ? "" : context.parameters.Label.raw;
 
     const _default =
-      context.parameters.Default.raw == null ? "" : context.parameters.Default.raw;
+      context.parameters.Default.raw == null
+        ? ""
+        : context.parameters.Default.raw;
 
     const _defaultNo = Number(_default);
 
-    const _optionsString = context.parameters.Options.raw == null ? `{ "dropdownOptions": [
+    const _optionsString =
+      this.tryParseJSONObject(context.parameters.Options.raw) &&
+      context.parameters.Options.raw != null
+        ? context.parameters.Options.raw
+        : `{ "dropdownOptions": [
       { "key": "apple", "text": "Apple" },
       { "key": "banana", "text": "Banana" },
       { "key": "orange", "text": "Orange", "disabled": true },
@@ -71,7 +87,7 @@ private renderControl(context: ComponentFramework.Context<IInputs>) : React.Reac
       { "key": "broccoli", "text": "Broccoli" },
       { "key": "carrot", "text": "Carrot" },
       { "key": "lettuce", "text": "Lettuce" }
-    ]}` : context.parameters.Options.raw;
+    ]}`;
 
     const _options = JSON.parse(_optionsString);
 
@@ -85,8 +101,8 @@ private renderControl(context: ComponentFramework.Context<IInputs>) : React.Reac
       onSliderChange: this.onSliderChange,
       dropdownOptions: _options["dropdownOptions"],
     };
-    return React.createElement(ShapeShifter, props );
-}
+    return React.createElement(ShapeShifter, props);
+  }
 
   /**
    * Called when any value in the property bag has changed. This includes field values, data-sets, global values such as container height and width, offline status, control metadata values such as label, visible, etc.
@@ -96,7 +112,6 @@ private renderControl(context: ComponentFramework.Context<IInputs>) : React.Reac
   public updateView(
     context: ComponentFramework.Context<IInputs>
   ): React.ReactElement {
-    
     return this.renderControl(context);
   }
 
@@ -106,7 +121,7 @@ private renderControl(context: ComponentFramework.Context<IInputs>) : React.Reac
    */
   public getOutputs(): IOutputs {
     return {
-        Value: this.currentValue == null ? undefined : this.currentValue
+      Value: this.currentValue == null ? undefined : this.currentValue,
     };
   }
 
