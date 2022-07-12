@@ -10,7 +10,7 @@ export class Shapeshifter
   private theComponent: ComponentFramework.ReactControl<IInputs, IOutputs>;
   private notifyOutputChanged: () => void;
   private currentValue: string | null | undefined;
-  private defaultValue: string | null;
+  private defaultValue: string | undefined;
   private _state: ComponentFramework.Dictionary;
 
   /**
@@ -32,7 +32,9 @@ export class Shapeshifter
   ): void {
     this._state = state;
     console.log("using virtual control in ShapeShifter");
-    this.defaultValue = context.parameters.Default.raw;
+    this.defaultValue == null
+    ? ""
+    : context.parameters.Default.raw;
     this.notifyOutputChanged = notifyOutputChanged;
   }
 
@@ -44,8 +46,14 @@ export class Shapeshifter
     this.onChange({}, date.toDateString());
   };
 
-  private onChange = (e?: any, newValue?: string | null) => {
+  private onDropdownChange = (e: any, selectedItem: IDropdownOption) => {
+    this.defaultValue = selectedItem.key.toString();
+    this.onChange({}, selectedItem.key.toString());
+  }
+
+  private onChange = (e?: any, newValue?: string) => {
     this.currentValue = newValue;
+    this.defaultValue = newValue;
     this.notifyOutputChanged();
   };
 
@@ -65,15 +73,11 @@ export class Shapeshifter
     console.log("entered renderControl in index.ts", context.updatedProperties);
 
     this.currentValue = context.parameters.Default.raw;
+    this.defaultValue = context.parameters.Default.raw == null ? undefined : context.parameters.Default.raw;
     const _lbl =
       context.parameters.Label.raw == null ? "" : context.parameters.Label.raw;
 
-    const _default =
-      context.parameters.Default.raw == null
-        ? ""
-        : context.parameters.Default.raw;
-
-    const _defaultNo = Number(_default);
+    const _defaultNo = Number(this.defaultValue);
 
     const _optionsString =
       this.tryParseJSONObject(context.parameters.Options.raw) &&
@@ -94,11 +98,12 @@ export class Shapeshifter
     const props: IShapeShifterProps = {
       label: _lbl,
       controlType: context.parameters.ControlType,
-      default: _default,
+      default: this.defaultValue,
       defaultNumber: _defaultNo,
       onChange: this.onChange,
       onSelectedDate: this.onSelectedDate,
       onSliderChange: this.onSliderChange,
+      onDropdownChange: this.onDropdownChange,
       dropdownOptions: _options["dropdownOptions"],
     };
     return React.createElement(ShapeShifter, props);
@@ -122,6 +127,7 @@ export class Shapeshifter
   public getOutputs(): IOutputs {
     return {
       Value: this.currentValue == null ? undefined : this.currentValue,
+      Default: this.defaultValue == null ? undefined : this.defaultValue,
     };
   }
 

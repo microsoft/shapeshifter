@@ -10,6 +10,7 @@ export interface IShapeShifterProps {
   defaultNumber?: number | undefined;
   onSelectedDate?: (date: any) => void;
   onSliderChange?: (newValue: any) => void;
+  onDropdownChange?: (e:any, selectedItem: any) => void;
   dropdownOptions: IDropdownOption[];
 }
 
@@ -40,6 +41,7 @@ export class ShapeShifter extends React.Component<IShapeShifterProps> {
         el = <Dropdown
           label={this.props.label}
           defaultSelectedKey={this.props.default}
+          onChange={this.props.onDropdownChange}
           options={this.props.dropdownOptions} />
         break;
       default:
