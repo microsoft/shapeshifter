@@ -40,7 +40,7 @@ export class ShapeShifter extends React.Component<IShapeShifterProps> {
       case "Dropdown":
         el = <Dropdown
           label={this.props.label}
-          defaultSelectedKey={this.props.default}
+          defaultSelectedKey={this.props.default} // I think this ultimately is the way to do it
           onChange={this.props.onDropdownChange}
           options={this.props.dropdownOptions} />
         break;
