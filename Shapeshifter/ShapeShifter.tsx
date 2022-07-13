@@ -1,17 +1,19 @@
 /* eslint-disable no-undef */
 import * as React from 'react';
-import { TextField, DatePicker, Async, Slider, Dropdown, IDropdownOption } from '@fluentui/react';
+import { TextField, DatePicker, Async, Slider, Dropdown, IDropdownOption, ChoiceGroup, IChoiceGroupOption } from '@fluentui/react';
 
 export interface IShapeShifterProps {
   label?: string;
   onChange: () => void;
-  controlType: ComponentFramework.PropertyTypes.EnumProperty<"TextField" | "Date" | "Slider" | "Dropdown">;
+  controlType: ComponentFramework.PropertyTypes.EnumProperty<"TextField" | "Date" | "Slider" | "Dropdown" | "ChoiceGroup">;
   default?: string | undefined;
   defaultNumber?: number | undefined;
   onSelectedDate?: (date: any) => void;
   onSliderChange?: (newValue: any) => void;
-  onDropdownChange?: (e:any, selectedItem: any) => void;
+  onDropdownChange?: (e: any, selectedItem: any) => void;
+  onChoiceGroupChange?: (e: any, selectedItem: any) => void;
   dropdownOptions: IDropdownOption[];
+  choiceGroupOptions: IChoiceGroupOption[];
 }
 
 export class ShapeShifter extends React.Component<IShapeShifterProps> {
@@ -43,6 +45,14 @@ export class ShapeShifter extends React.Component<IShapeShifterProps> {
           defaultSelectedKey={this.props.default} // I think this ultimately is the way to do it
           onChange={this.props.onDropdownChange}
           options={this.props.dropdownOptions} />
+        break;
+      case "ChoiceGroup":
+        el = <ChoiceGroup
+          label={this.props.label}
+          options={this.props.choiceGroupOptions}
+          defaultSelectedKey={this.props.default}
+          onChange={this.props.onChoiceGroupChange}
+        />
         break;
       default:
         break;

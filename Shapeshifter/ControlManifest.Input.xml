@@ -24,6 +24,7 @@
       <value name="Date" display-name-key="Date" description-key="A standard Fluent UI Date Picker">Date</value>
       <value name="Slider" display-name-key="Slider" description-key="A standard Fluent UI Slider">Slider</value>
       <value name="Dropdown" display-name-key="Dropdown" description-key="A standard Fluent UI Dropdown">Dropdown</value>
+      <value name="ChoiceGroup" display-name-key="ChoiceGroup" description-key="A standard Fluent UI ChoiceGroup">ChoiceGroup</value>
     </property>
     <property name="Options" display-name-key="Options" description-key="Options" of-type="SingleLine.TextArea" usage="bound" required="false" />
     <property name="Default" display-name-key="Default" description-key="Default" of-type="SingleLine.Text" usage="bound" required="true" />

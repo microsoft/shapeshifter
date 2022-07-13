@@ -2,7 +2,7 @@
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
 import { ShapeShifter, IShapeShifterProps } from "./ShapeShifter";
 import * as React from "react";
-import { DropdownMenuItemType, IDropdownOption } from "@fluentui/react";
+import { IChoiceGroupOption, IDropdownOption } from "@fluentui/react";
 
 export class Shapeshifter
   implements ComponentFramework.ReactControl<IInputs, IOutputs>
@@ -47,6 +47,10 @@ export class Shapeshifter
   };
 
   private onDropdownChange = (e: any, selectedItem: IDropdownOption) => {
+    this.defaultValue = selectedItem.key.toString();
+    this.onChange({}, selectedItem.key.toString());
+  }
+  private onChoiceGroupChange = (e: any, selectedItem: IChoiceGroupOption) => {
     this.defaultValue = selectedItem.key.toString();
     this.onChange({}, selectedItem.key.toString());
   }
@@ -104,7 +108,9 @@ export class Shapeshifter
       onSelectedDate: this.onSelectedDate,
       onSliderChange: this.onSliderChange,
       onDropdownChange: this.onDropdownChange,
+      onChoiceGroupChange: this.onChoiceGroupChange,
       dropdownOptions: _options["dropdownOptions"],
+      choiceGroupOptions: _options["choiceGroupOptions"],
     };
     return React.createElement(ShapeShifter, props);
   }
