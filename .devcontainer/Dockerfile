@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:5.0
+FROM mcr.microsoft.com/dotnet/sdk:6.0
 
 # Install common tooling
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
