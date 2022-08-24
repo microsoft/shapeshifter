@@ -7,7 +7,8 @@
 	},
 	"extensions": [
 		"danish-naglekar.pcf-builder",
-		"microsoft-isvexptools.powerplatform-vscode"
+		"microsoft-isvexptools.powerplatform-vscode",
+		"github.copilot"
 	],
 	"forwardPorts": [8181],
 	"containerEnv": {
