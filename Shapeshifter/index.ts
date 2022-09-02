@@ -1,17 +1,19 @@
 /* eslint-disable no-undef */
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
-import { ShapeShifter, IShapeShifterProps } from "./ShapeShifter";
+import { ShapeShifter } from "./ShapeShifter";
+import { IShapeShifterProps } from "./IShapeShifterProps";
 import * as React from "react";
 import { IChoiceGroupOption, IDropdownOption } from "@fluentui/react";
 
 export class Shapeshifter
   implements ComponentFramework.ReactControl<IInputs, IOutputs>
 {
-  private theComponent: ComponentFramework.ReactControl<IInputs, IOutputs>;
+  /** Used to notify if the control has changed */ 
   private notifyOutputChanged: () => void;
+  /** The current value of the control, what will be rendered and sent back to the data layer */
   private currentValue: string | null | undefined;
+  /** The default value provided from the data layer */
   private defaultValue: string | undefined;
-  private _state: ComponentFramework.Dictionary;
 
   /**
    * Empty constructor.
@@ -30,37 +32,50 @@ export class Shapeshifter
     notifyOutputChanged: () => void,
     state: ComponentFramework.Dictionary
   ): void {
-    this._state = state;
     console.log("using virtual control in ShapeShifter");
+    
+    // On init we want to properly set the default value
     this.defaultValue == null
     ? ""
     : context.parameters.Default.raw;
+    
+    // Bind the context's notifyOutputChanged method to this component's method
     this.notifyOutputChanged = notifyOutputChanged;
   }
 
+  /** Formats the slider change to string and sends it to onChange for processing */
   private onSliderChange = (newValue: number) => {
     this.onChange({}, newValue.toString());
   };
 
+  /** Formats the selected date to string and sends it to onChange for processing */
   private onSelectedDate = (date: Date) => {
     this.onChange({}, date.toDateString());
   };
 
+  /** Formats the dropdown change to string and updates the default value before sending it to onChange for processing.
+   * Don't remember why the default value is updated before the onChange event is sent.. Might be redundant troubleshooting code.
+   */
   private onDropdownChange = (e: any, selectedItem: IDropdownOption) => {
     this.defaultValue = selectedItem.key.toString();
     this.onChange({}, selectedItem.key.toString());
   }
+  /** Formats the choicegroup change to string and updates the default value before sending it to onChange for processing.
+   * Don't remember why the default value is updated before the onChange event is sent.. Might be redundant troubleshooting code.
+   */
   private onChoiceGroupChange = (e: any, selectedItem: IChoiceGroupOption) => {
     this.defaultValue = selectedItem.key.toString();
     this.onChange({}, selectedItem.key.toString());
   }
 
+  /** Handles all ShapeShifter changes by updating the current and default value and letting the control know of the change */
   private onChange = (e?: any, newValue?: string) => {
     this.currentValue = newValue;
     this.defaultValue = newValue;
     this.notifyOutputChanged();
   };
 
+  /** Method that idenfities if provided string is parseable JSON */
   private tryParseJSONObject(jsonstring: string | null): boolean {
     if (jsonstring == null) return false;
     try {
@@ -71,18 +86,24 @@ export class Shapeshifter
     }
   }
 
+  /** Meat of index.ts this performs necessary operations to render the control */
   private renderControl(
     context: ComponentFramework.Context<IInputs>
   ): React.ReactElement {
     console.log("entered renderControl in index.ts", context.updatedProperties);
-
+    
+    // Get the properties from the manifest
     this.currentValue = context.parameters.Default.raw;
     this.defaultValue = context.parameters.Default.raw == null ? undefined : context.parameters.Default.raw;
+    
+    // Handle nulls for label
     const _lbl =
       context.parameters.Label.raw == null ? "" : context.parameters.Label.raw;
 
+    // generate a number version of default value
     const _defaultNo = Number(this.defaultValue);
 
+    // Set _optionString to the options parameter if it's valid otherwise set it to a sample JSON structure
     const _optionsString =
       this.tryParseJSONObject(context.parameters.Options.raw) &&
       context.parameters.Options.raw != null
@@ -97,8 +118,10 @@ export class Shapeshifter
       { "key": "lettuce", "text": "Lettuce" }
     ]}`;
 
+    // optionStrings converted to JSON object for use in the control
     const _options = JSON.parse(_optionsString);
 
+    // build out the properties for the control
     const props: IShapeShifterProps = {
       label: _lbl,
       controlType: context.parameters.ControlType,
@@ -112,6 +135,8 @@ export class Shapeshifter
       dropdownOptions: _options["dropdownOptions"],
       choiceGroupOptions: _options["choiceGroupOptions"],
     };
+
+    // Return the rendered control
     return React.createElement(ShapeShifter, props);
   }
 
