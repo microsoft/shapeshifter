@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import * as React from 'react';
-import { TextField, DatePicker, Async, Slider, Dropdown, ChoiceGroup } from '@fluentui/react';
+import { TextField, DatePicker, Async, Slider, Dropdown, ChoiceGroup, SpinButton, Rating } from '@fluentui/react';
 import { IShapeShifterProps } from './IShapeShifterProps';
 
 export class ShapeShifter extends React.Component<IShapeShifterProps> {
@@ -19,15 +19,21 @@ export class ShapeShifter extends React.Component<IShapeShifterProps> {
         theDate = (this.props.default == undefined) ? new Date() : new Date(this.props.default);
         el = <DatePicker onSelectDate={this.props.onSelectedDate} label={this.props.label} defaultValue={this.props.default} value={theDate}></DatePicker>
         break;
+      case "Rating":
+        el = <Rating min={1} max={5} onChange={this.props.onChange} defaultValue={this.props.default}></Rating>
+        break;
       case "Slider":
         el = <Slider
           label={this.props.label}
-          max={11}
+          max={22}
           defaultValue={this.props.defaultNumber}
           showValue
           // eslint-disable-next-line react/jsx-no-bind
           onChange={this.props.onSliderChange}
         />
+        break;
+      case "SpinButton":
+        el = <SpinButton label={this.props.label} defaultValue={this.props.default} min={0} max={100} step={1} />
         break;
       case "Dropdown":
         el = <Dropdown

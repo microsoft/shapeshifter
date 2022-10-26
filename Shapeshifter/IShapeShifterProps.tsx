@@ -8,7 +8,7 @@ export interface IShapeShifterProps {
   /** Handles generic changes for ShapeShifter */
   onChange: () => void;
   /** Property that we read to determine what time of FluentUI Component to render. New components need to be enumerated here.*/
-  controlType: ComponentFramework.PropertyTypes.EnumProperty<"TextField" | "Date" | "Slider" | "Dropdown" | "ChoiceGroup">;
+  controlType: ComponentFramework.PropertyTypes.EnumProperty<"TextField" | "Rating" | "SpinButton" | "Date" | "Slider" | "Dropdown" | "ChoiceGroup">;
   /** Optional default string value for ShapeShifter */
   default?: string | undefined;
   /** Optional default number value for ShapeShifter */
