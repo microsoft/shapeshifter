@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import * as React from 'react';
-import { TextField, DatePicker, Async, Slider, Dropdown, ChoiceGroup } from '@fluentui/react';
+import { TextField, DatePicker, Async, Slider, Rating, RatingSize, Dropdown, ChoiceGroup } from '@fluentui/react';
 import { IShapeShifterProps } from './IShapeShifterProps';
 
 export class ShapeShifter extends React.Component<IShapeShifterProps> {
@@ -27,6 +27,16 @@ export class ShapeShifter extends React.Component<IShapeShifterProps> {
           showValue
           // eslint-disable-next-line react/jsx-no-bind
           onChange={this.props.onSliderChange}
+        />
+        break;
+      case "Rating":
+        el = <Rating
+          ariaLabel={this.props.label}
+          max={6}
+          min={0}
+          defaultValue={this.props.defaultNumber}
+          // eslint-disable-next-line react/jsx-no-bind
+          onChange={this.props.onRatingChange}
         />
         break;
       case "Dropdown":

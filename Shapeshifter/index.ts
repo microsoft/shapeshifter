@@ -47,7 +47,10 @@ export class Shapeshifter
   private onSliderChange = (newValue: number) => {
     this.onChange({}, newValue.toString());
   };
-
+  /** Formats the rating change to string and sends it to onChange for processing */
+  private onRatingChange = (e: any, newRating: number) => {
+    this.onChange({}, newRating.toString());
+  };
   /** Formats the selected date to string and sends it to onChange for processing */
   private onSelectedDate = (date: Date) => {
     this.onChange({}, date.toDateString());
@@ -130,6 +133,7 @@ export class Shapeshifter
       onChange: this.onChange,
       onSelectedDate: this.onSelectedDate,
       onSliderChange: this.onSliderChange,
+      onRatingChange: this.onRatingChange,
       onDropdownChange: this.onDropdownChange,
       onChoiceGroupChange: this.onChoiceGroupChange,
       dropdownOptions: _options["dropdownOptions"],
