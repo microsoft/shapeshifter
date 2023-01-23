@@ -11,6 +11,9 @@ The inspiration for this control is that there is no way to do it in a Canvas Ap
 * Fluent UI DatePicker
 * Fluent UI Slider
 * Fluent UI Dropdown
+* Fluent UI ChoiceGroup
+* Fluent UI SpinButton
+* Fluent UI StarRating
 
 ## How to use
 Import the solution from our [releases area](https://github.com/brendon-colburn/shapeshifter/releases).  It has a sample Canvas App to help you understand the concept.
